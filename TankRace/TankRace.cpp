@@ -27,13 +27,25 @@ namespace mod {
             }
 
             int newIndex = (i + s) % this->size();
-
-            // 4 5 7 8 9 8 3 3 5 2 1 
-            for (size_t j = i; j !=newIndex; ++j) {
-                Type v = vec[j];
-                vec[j] = vec[j + 1];
-                vec[j + 1] = v;
+            int d = newIndex - i;
+            // 4 2 5 7 1
+            // 4 2 5 1 7
+            // 7 4 2 5 1
+            // 4 7 2 5 1
+            // 
+            if (d>0) {
+                for (size_t j = i; j != newIndex; ++j) {
+                    Type v = vec[j];
+                    vec[j] = vec[j + 1];
+                    vec[j + 1] = v;
+                }
             }
+            else
+                for (size_t j = i; j != newIndex; --j) {
+                    Type v = vec[j];
+                    vec[j] = vec[j - 1];
+                    vec[j - 1] = v;
+                }
         }
 	};
 };
@@ -45,6 +57,6 @@ int main() {
     a.push_back(5);
     a.print();
     puts("");
-    a.shift(3,1);
+    a.shift(-7,2);
     a.print();
 }
